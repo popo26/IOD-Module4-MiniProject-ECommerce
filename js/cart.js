@@ -31,6 +31,10 @@ fetch("https://fakestoreapi.com/products")
 
       xAxis: {
         data: typeArr,
+        axisLabel: {
+          rotate: 45,
+          fontSize: 10,
+        },
       },
       yAxis: {},
       series: [
