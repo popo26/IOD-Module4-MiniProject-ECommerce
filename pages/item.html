@@ -31,7 +31,7 @@
             >
             <button
               type="button"
-              class="btn btn-outline-dark back-btn"
+              class="btn btn-outline-dark back-btn-item"
               onclick="history.back()"
             >
               <iconify-icon icon="clarity:home-solid" width="20"></iconify-icon>
@@ -40,19 +40,23 @@
         </nav>
 
         <div class="container text-center item-div">
-          <img class="item-image" src="" alt="" />
-          <p class="item-title">Hoodie</p>
-          <p class="item-price">120 NZD</p>
-          <button class="btn btn-dark add-btn">Add</button>
-          <p>Product Information:</p>
-          <p class="item-description">
-            Suspendisse pharetra lectus non placerat porttitor. Sed euismod
-            vehicula nibh,
-          </p>
-          <p>
-            <iconify-icon icon="uiw:like-o"></iconify-icon> Rating:
-            <span class="item-rating"></span>
-          </p>
+          <div class="item-img-div">
+            <img class="item-image" src="" alt="" />
+          </div>
+          <div class="item-description-div">
+            <p class="item-title">Hoodie</p>
+            <p class="item-price">120 NZD</p>
+            <button class="btn btn-dark add-btn">Add</button>
+            <p class="product-info">Product Information:</p>
+            <p class="item-description">
+              Suspendisse pharetra lectus non placerat porttitor. Sed euismod
+              vehicula nibh,
+            </p>
+            <p class="rating">
+              <iconify-icon icon="uiw:like-o"></iconify-icon> Rating:
+              <span class="item-rating"></span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -64,7 +68,6 @@
     </div>
     <!-- axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-
     <!-- Bootstrap -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -75,9 +78,7 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <!-- CDN example (jsDelivr) -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-
     <!-- External JavaScript -->
     <script src="../js/item.js"></script>
-    <!-- <script src="../js/search.js"></script> -->
   </body>
 </html>

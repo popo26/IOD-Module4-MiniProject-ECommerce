@@ -1,5 +1,11 @@
 body {
     color: rgba(0, 0, 0, 0.65);
+    margin:0;
+    padding:0;
+}
+
+a {
+    text-decoration: none;
 }
 
 .shop-logo {
@@ -29,10 +35,14 @@ body {
 }
 
 .result-div {
-    border: 1px solid black;
     border-radius: 10px;
     margin: 10px;
     text-align: center;
+    background-color: #F8F9FA;
+}
+
+.result-link{
+    cursor: pointer;
 }
 
 .result-image {
@@ -41,14 +51,20 @@ body {
     padding: 10px;
 }
 
+#search-results {
+    text-align: center;
+}
+
 .card-id,
-.item-id {
+.item-id,
+.result-id {
     visibility: hidden
 }
 
 .home-div {
-    width: 90%;
+    width: 100%;
     margin: auto;
+    padding:20px;
 }
 
 .homeImage {
@@ -102,7 +118,7 @@ body {
 }
 
 .add-btn {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .card-div {
@@ -113,6 +129,18 @@ body {
     width: 100%;
     height: 40vh;
     object-fit: scale-down;
+}
+
+.card-link {
+    cursor: pointer;
+}
+
+.card-title, .result-title {
+    color:#212529;
+}
+
+.card-title:hover, .result-title:hover {
+    color:rgba(0, 0, 0, 0.65)
 }
 
 .individual-card {
@@ -128,6 +156,10 @@ body {
     width: 100%;
 }
 
+.product-info, .rating {
+    font-family: 'Tiro Bangla', serif;
+}
+
 .cart-div {
     position: absolute;
     right: 80px;
@@ -137,9 +169,23 @@ body {
     color: rgba(0, 0, 0, 0.65);
 }
 
+
 .back-btn {
+    position:absolute;
+    right:30px;
     font: 100px;
     color: rgba(0, 0, 0, 0.65);
+}
+
+.back-btn-item {
+    position:absolute;
+    right:16px;
+    font: 100px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.back-btn:hover, .back-btn-item:hover {
+    background-color:rgba(0, 0, 0, 0.65);
 }
 
 .checkout-btn{
@@ -162,20 +208,16 @@ footer {
     position:absolute;
     bottom:0;
     width:100%;
-    height:2.5rem
-
+    height:2.5rem;
+    padding-top:10px;
+    background-color: #F8F9FA;
 }
 
 @media only screen and (min-width: 768px) {
 
-    body {
+    /* body {
         background: lightyellow;
-    }
-
-    .home-div {
-        width: 60%;
-        margin: auto;
-    }
+    } */
 
     .homeImage {
         padding: 30px;
@@ -222,19 +264,19 @@ footer {
 
 @media only screen and (min-width: 992px) {
 
-    body {
+    /* body {
         background: lightblue;
-    }
+    } */
 
-    .home-div {
+    .home-div, .item-img-div, .item-description-div {
         width: 100%;
         margin: auto;
     }
 
     .homeImage {
-        padding: 20px;
         margin-top: 100px;
-        height: 69vh;
+        max-height: 62vh;
+        overflow:hidden;  
     }
 
     .card-div {
@@ -243,18 +285,21 @@ footer {
 
     .item-div {
         margin-top: 8%;
+        display:flex;
+        gap:20px;
     }
 
     .item-image {
-        margin-bottom: 20px;
-        width: 60%;
-        height: fit-content;
+        width: 90%;
+        max-height:70vh;  
+        object-fit:scale-down;
+
     }
 
     .item-title {
         font-size: larger;
+        color:#212529;
     }
-
 
     #productsChart {
         margin: auto;
@@ -262,4 +307,8 @@ footer {
         width: 60%;
         height: 500px;
     }
+
+    .page-container {
+        overflow:hidden;
+    }    
 }

@@ -1,5 +1,4 @@
-
-//Attempted adding big block of HTML by javascript - Ai
+//Attempted adding big block of HTML by javascript in order to be DRY with navbar - Ai
 
 // const navbar =  '<nav class="navbar bg-body-tertiary fixed-top">' +
 //   '<div class="container-fluid">' +
@@ -24,6 +23,3 @@
 // '</nav>';
 
 // document.getElementById('header').innerHTML = navbar;
-
-
-

@@ -26,15 +26,11 @@
       <div class="content-wrap">
         <template id="result-template">
           <div class="result-div">
-            <img
-              class="result-image"
-              src="../public/images/home-woman.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <a class="toItemPage" href="\pages\item.html"
-              ><div class="result-title"></div
-            ></a>
+            <div class="result-id"></div>
+            <a class="toItemPage result-link" href="\pages\item.html">
+              <img class="result-image" src="" class="card-img-top" alt="..." />
+              <div class="result-title"></div>
+            </a>
             <div class="result-price"></div>
           </div>
         </template>
@@ -52,8 +48,10 @@
                   icon="solar:bag-4-outline"
                   width="30"
                   class="cart-icon"
-                ></iconify-icon
-              ></a>
+                >
+                </iconify-icon>
+                <span class="badge text-bg-secondary itemCount"></span>
+              </a>
             </div>
 
             <button
@@ -144,10 +142,10 @@
                   <input
                     class="form-control me-2 search-input"
                     type="search"
-                    placeholder="Search"
                     aria-label="Search"
                     name="search"
                   />
+
                   <button
                     class="btn btn-outline-dark search-submit"
                     type="submit"
@@ -155,6 +153,7 @@
                     Search
                   </button>
                 </form>
+
                 <div id="search-results"></div>
               </div>
             </div>
@@ -178,13 +177,15 @@
             style="width: 18rem"
           >
             <div class="card-id"></div>
-            <img
-              class="card-image"
-              src="../public/images/home-woman.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <a class="card-link"><div class="card-title"></div></a>
+            <a class="card-link">
+              <img
+                class="card-image"
+                src="../public/images/home-woman.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-title"></div>
+            </a>
             <div class="card-price"></div>
           </div>
         </template>
