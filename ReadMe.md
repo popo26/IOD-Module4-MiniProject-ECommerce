@@ -12,7 +12,7 @@ Quality of the notebook - code well documented, runs correctly
 <hr>
 
 Create a fake eCommerce website with the data from the Fake Store API.
-- [x] Project Planning - Flowchart/LoFi/HiFi
+- [x] Project Planning - Flowchart/LoFi/HiFi(Figma)
 - [x] Fetch or Axios the API data
 - [x] Create Bootstrap cards to display the items, including the image, title, price, item description
 - [x] Create drop down selection to choose individual product categories
