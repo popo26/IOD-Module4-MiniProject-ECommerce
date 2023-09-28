@@ -4,11 +4,13 @@
 The purpose of the Mini Project is to reinforce skills that have been covered in recent modules.
 Select a data set and analyse it using the techniques learned in recent modules. Prepare and present a 10-minute presentation in class.
 <hr>
+
 ### Rubric:
 Explanation of the business context behind the dataset
 Quality of presentation - engaging, well structured, not too short or too long
 Quality of the notebook - code well documented, runs correctly
 <hr>
+
 Create a fake eCommerce website with the data from the Fake Store API.
 - [x] Fetch or Axios the API data
 - [x] Create Bootstrap cards to display the items, including the image, title, price, item description
