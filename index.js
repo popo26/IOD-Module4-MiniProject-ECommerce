@@ -38,7 +38,7 @@ function addCard(title, price, image, id) {
   template.querySelector(`.id${id}`).addEventListener("click", function (e) {
     let inputId = id;
     localStorage.setItem("myId", inputId);
-    window.location.href = "/pages/item.html";
+    window.location.href = "./pages/item.html";
   });
   template.querySelector(".card-title").innerText = title;
   template.querySelector(".card-price").innerText = price + " NZD";

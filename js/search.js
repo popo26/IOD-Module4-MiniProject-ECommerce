@@ -16,7 +16,7 @@ function resultShow(title, price, image, id) {
     .addEventListener("click", function (e) {
       let inputId = id;
       localStorage.setItem("myId", inputId);
-      window.location.href = "/pages/item.html";
+      window.location.href = "./pages/item.html";
     });
   template.querySelector(".result-title").innerText = title;
   template.querySelector(".result-price").innerText = price + " NZD";
