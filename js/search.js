@@ -20,6 +20,23 @@ function resultShow(title, price, image, id) {
     });
   template.querySelector(".result-title").innerText = title;
   template.querySelector(".result-price").innerText = price + " NZD";
+
+  // adding click event to track cliking count of Add button.
+  // As the count required to be persistent during session, sessionStorage is used.
+  template.querySelector(".result-add-btn").addEventListener("click", function (e) {
+    // ternary operator to set 0 for initial value of itemCount variable
+    // to avoid error since it's initially undefined.
+    sessionStorage.setItem(
+      "itemCount",
+      !sessionStorage["itemCount"] ? 0 : sessionStorage["itemCount"]
+    );
+    // value of sessionStorage is not number so using parseInt.
+    let currentValue = parseInt(sessionStorage["itemCount"]);
+    sessionStorage["itemCount"] = currentValue + 1;
+    window.location.href = "/index.html";
+  });
+  
+  
   // include the populated template into the page
   document.querySelector("#search-results").appendChild(template);
 }

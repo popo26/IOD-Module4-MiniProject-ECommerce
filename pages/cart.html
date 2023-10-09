@@ -24,6 +24,29 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
+    <template id="cart-template">
+      <div class="cart-item-div">
+        <div class="cart-id"></div>
+        <a class="cart-link" href="./item.html">
+          <img class="cart-image" src="" class="cart-img-top" alt="..." />
+          <div class="cart-title"></div>
+        </a>
+        <div class="cart-price"></div>
+        <button class="btn btn-dark cart-remove-btn">Remove</button>
+      </div>
+    </template>
+
+    <template id="breakdown-template">
+      <div class="breakdown-item-div">
+        <!-- <div class="breakdown-id"></div> -->
+        <div class="breakdown-set-div">
+          <p class="breakdown-title"></p>
+          <p class="breakdown-price"></p>
+        </div>
+      </div>
+    </template>
+
+
     <div class="page-container">
       <div class="content-wrap">
         <nav class="navbar bg-body-tertiary fixed-top">
@@ -40,20 +63,29 @@
             </button>
           </div>
         </nav>
-        <div class="chart-div">
-          <div id="productsChart"></div>
+
+        <div class="cart-container">
+          <div class="total" id="cart-item-list"></div>
+
+          <div class="chart-total-div">
+         
+
+            <div class="chart-div">
+              <div id="productsChart"></div>
+            </div>
+
+            <div class="total-div">
+              <div id="breakdown-list"></div>
+
+              <button type="button" class="btn btn-outline-dark btn-lg checkout-btn">
+                Checkout
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="total">
-          <p>Hoodie x1 20 NZD</p>
-          <p>Shirts x4 40 NZD</p>
-          <p>Socks x1 10 NZD</p>
-          <p>Benie x1 20 NZD</p>
-          <h3 class="cart-total">Grand Total: 100 NZD</h3>
-          <button type="button" class="btn btn-dark checkout-btn">
-            Checkout
-          </button>
-        </div>
+
       </div>
+
       <footer>
         <iconify-icon icon="uiw:copyright" width="10"></iconify-icon>
         Luise Vuitton
@@ -75,5 +107,6 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <!-- External JavaScript -->
     <script src="../js/cart.js"></script>
+    <script src="../js/year.js"></script>
   </body>
 </html>

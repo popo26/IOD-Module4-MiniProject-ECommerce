@@ -1,17 +1,20 @@
 let homeImage = "";
 const categoryArray = [".women", ".men", ".jewelery", ".electronics"];
 
-//Days.js for footer
-document.querySelector(".year").innerHTML = dayjs().year();
-
 //sessionStorage is used so that count is persistent during session, instead of localStorage.
 window.onload = function () {
   const itemCount = sessionStorage.getItem("itemCount");
-  document.querySelector(".itemCount").innerHTML = itemCount;
+  if (itemCount < 1) {
+    document.querySelector(".itemCount").innerHTML = "";
+
+  } else {
+    document.querySelector(".itemCount").innerHTML = itemCount;
+
+  }
 };
 
 // template to create home image
-function homeImagesShow(image, title) {
+function homeImagesShow(image, title, id) {
   // clone the template
   const template = document
     .getElementById("homeImages-template")
@@ -19,6 +22,16 @@ function homeImagesShow(image, title) {
   // populate the template
   template.querySelector(".homeImage").src = image;
   template.querySelector(".homeImage").alt = title;
+
+  // template.querySelector(".home-img-id").innerHTML = id;
+  template.querySelector(".home-img-link").classList.add(`id${id}`);
+  template.querySelector(`.id${id}`).addEventListener("click", function (e) {
+    let inputId = id;
+    localStorage.setItem("myId", inputId);
+    window.location.href = "./pages/item.html";
+  });
+
+
   // include the populated template into the page
   document.querySelector("#homeImages-show").appendChild(template);
 }
@@ -52,7 +65,7 @@ axios
     const data = response.data;
     // randomise image on home page
     homeImage = data[Math.floor(Math.random() * data.length)];
-    homeImagesShow(homeImage.image, homeImage.title);
+    homeImagesShow(homeImage.image, homeImage.title, homeImage.id);
   })
   .catch((error) => {
     console.error(`Error: ${error.message}`);
@@ -100,3 +113,9 @@ for (let key in categoryArray) {
         });
     });
 }
+
+document.querySelector(".cart-icon").addEventListener("click", function (e) {
+  let totalCount = itemCount;
+  sessionStorage.setItem("itemCount", totalCount);
+  window.location.href = "../pages/cart.html";
+});
