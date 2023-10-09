@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <template id="cart-template">
+    <!-- <template id="cart-template">
       <div class="cart-item-div">
         <div class="cart-id"></div>
         <a class="cart-link" href="./item.html">
@@ -34,13 +34,36 @@
         <div class="cart-price"></div>
         <button class="btn btn-dark cart-remove-btn">Remove</button>
       </div>
+    </template> -->
+
+    <template id="cart-template">
+      <div class="cart-item-div">
+        <div class="cart-id"></div>
+        <a class="cart-link" href="./item.html">
+          <img class="cart-image" src="" class="cart-img-top" alt="..." />
+          <!-- <div class="cart-title"></div> -->
+        </a>
+        <!-- <div class="cart-price"></div> -->
+
+        <div class="cart-set-div">
+          <p class="cart-title"></p>
+          <p class="cart-item-number"></p>
+          <p class="cart-price"></p>
+        </div>
+
+<div class="remove-btn-div">
+  <button class="btn btn-dark cart-remove-btn">Remove</button>
+</div>
+      </div>
     </template>
+
 
     <template id="breakdown-template">
       <div class="breakdown-item-div">
         <!-- <div class="breakdown-id"></div> -->
         <div class="breakdown-set-div">
           <p class="breakdown-title"></p>
+          <p class="breakdown-item-number"></p>
           <p class="breakdown-price"></p>
         </div>
       </div>

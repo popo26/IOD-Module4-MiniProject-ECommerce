@@ -51,18 +51,27 @@ a {
     font-size:smaller
 }
 
+
 .breakdown-title{
     border: 1px solid red;
     height: 40px;
     float: left;
-    width: 45%;
+    width: 50%;
 }
+
+.breakdown-item-number{
+    border: 1px solid green;
+    height: 40px;
+    float: left;
+    width: 20%;
+}
+
 
 .breakdown-price {
     border: 1px dotted blue;
     height: 40px;
     float: right;
-    width: 45%;
+    width: 20%;
 }
 
 .cart-total {
@@ -205,11 +214,15 @@ a {
 #cart-item-list {
     display:flex;
     flex-wrap:wrap;
+    flex-direction:column;
     width:60%;
+    gap:8px
+
+  
 }
 
 .cart-item-div {
-    width:300px;
+    width:100%;
     height:auto;
     max-height:100%;
     /* height:500px; */
@@ -217,34 +230,69 @@ a {
     background-color: #F8F9FA;
     border-radius: 10px;
     border:1px solid black;
-    text-align: center;
-    padding:50px;
+    /* text-align: center; */
+    padding:10px;
+
+    text-align: left;
+    font-size:smaller
 }
 
 .cart-image {
-    /* width:100px;
-    object-fit: scale-down; */
-
-    /* width: 100%;
-    height: 40vh;
-    object-fit: scale-down;
-    padding:20px; */
-
-    height: 100px; 
+    /* height: 100px; 
     width: auto;
     max-width: 100%;
+    object-fit: scale-down; */
+
+    border: 1px solid yellow;
+    height: 80px;
+    float: left;
+    width: 20%;
     object-fit: scale-down;
 
-    /* height: 300px; 
-    width: 100%;
-    object-fit: contain; */
 }
+
+.cart-title{
+    border: 1px solid red;
+    height: 80px;
+    float: left;
+    width: 40%;
+}
+
+.cart-item-number{
+    border: 1px solid green;
+    height: 80px;
+    float: left;
+    width: 20%;
+    text-align:center;
+}
+
+
+.cart-price {
+    border: 1px dotted blue;
+    height: 80px;
+    float: right;
+    width: 20%;
+    text-align:center;
+
+}
+
+.remove-btn-div{
+    text-align: right;
+}
+/* .cart-remove-btn{
+    text-align: right;
+} */
+
 
 .chart-total-div{
     display:flex;
     flex-direction: column;
     width:40%;
 }
+
+
+
+/* shopping cart icon */
 
 
 .cart-div {

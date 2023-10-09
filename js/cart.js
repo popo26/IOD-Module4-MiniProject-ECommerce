@@ -154,16 +154,16 @@ window.onload = function () {
   //sessionStorage.setItem("itemCount", itemCount);
   // randomItems(itemCount);
 
-    if (itemCount < 1) {
-        document.getElementById("cart-item-list").innerText =
-          "No item has been added to your cart.";
-      } else {
-        randomItems(itemCount);
-      }
+  if (itemCount < 1) {
+    document.getElementById("cart-item-list").innerText =
+      "No item has been added to your cart.";
+  } else {
+    randomItems(itemCount);
+  }
 };
 
 // template to display results of search in nav bar
-function showCartItems(title, price, image, id) {
+function showCartItems(title, price, image, id, count) {
   // clone the template
   const template = document
     .getElementById("cart-template")
@@ -171,6 +171,8 @@ function showCartItems(title, price, image, id) {
   // populate the template
   template.querySelector(".cart-image").src = image;
   template.querySelector(".cart-image").alt = title;
+  template.querySelector(".cart-item-div").classList.add(`cartId${id}`);
+
   // adding id for debug purpose
   template.querySelector(".cart-id").innerText = id;
   // adding click event to identify each item to pass to item.html.
@@ -183,6 +185,8 @@ function showCartItems(title, price, image, id) {
       window.location.href = "../pages/item.html";
     });
   template.querySelector(".cart-title").innerText = title;
+  template.querySelector(".cart-item-number").innerText = `${count} pc`;
+
   template.querySelector(".cart-price").innerText = price + " NZD";
 
   // adding click event to track cliking count of Add button.
@@ -190,13 +194,6 @@ function showCartItems(title, price, image, id) {
   template
     .querySelector(".cart-remove-btn")
     .addEventListener("click", function (e) {
-      // ternary operator to set 0 for initial value of itemCount variable
-      // to avoid error since it's initially undefined.
-      // sessionStorage.setItem(
-      //   "itemCount",
-      //   !sessionStorage["itemCount"] ? 0 : sessionStorage["itemCount"]
-      // );
-      // value of sessionStorage is not number so using parseInt.
       let currentValue = parseInt(sessionStorage["itemCount"]);
       sessionStorage["itemCount"] = currentValue - 1;
       window.location.href = "";
@@ -208,16 +205,15 @@ function showCartItems(title, price, image, id) {
 
 // template to display results of search in nav bar
 function showBreakdown(title, price, id) {
-  // clone the template
   const template = document
     .getElementById("breakdown-template")
     .content.cloneNode(true);
-  // populate the template
 
   // adding id for debug purpose
   // template.querySelector(".breakdown-id").innerText = id;
 
   template.querySelector(".breakdown-title").innerText = title;
+  template.querySelector(".breakdown-item-number").innerText = "1 PC";
   template.querySelector(".breakdown-price").innerText = price + " NZD";
 
   // include the populated template into the page
@@ -229,19 +225,46 @@ function randomItems(num) {
     .get("https://fakestoreapi.com/products")
     .then((response) => {
       const data = response.data;
-      // if (itemCount < 1) {
-      //   document.getElementById("cart-item-list").innerText =
-      //     "No item has been added to your cart.";
-      // } 
 
       for (let i = 0; i < num; i++) {
         const randomItem = data[Math.floor(Math.random() * data.length)];
-        showCartItems(
-          randomItem.title,
-          randomItem.price,
-          randomItem.image,
-          randomItem.id
-        );
+        const cartIdDivs = document.querySelectorAll(".cart-id");
+        let count = 1;
+        if (cartIdDivs) {
+          for (let x in cartIdDivs) {
+            // console.log(document.querySelectorAll(".cart-id")[x].innerText)
+            if (cartIdDivs[x].innerText == randomItem.id) {
+              console.log("existing ID", cartIdDivs[x].innerText);
+              count++;
+              console.log(`count is ${count}`);
+              // Hide duplicate item
+              const dups = document.querySelectorAll(`.cartId${randomItem.id}`);
+
+              for (let i = 0; i < dups.length; i++) {
+                //console.log(dups[i])
+                dups[i].style.display = "none";
+              }
+            }
+          }
+        }
+
+        if (document.querySelector(`.cartId${randomItem.id}`)) {
+          showCartItems(
+            randomItem.title,
+            randomItem.price * count,
+            randomItem.image,
+            randomItem.id,
+            count
+          );
+        } else {
+          showCartItems(
+            randomItem.title,
+            randomItem.price,
+            randomItem.image,
+            randomItem.id,
+            count
+          );
+        }
         showBreakdown(randomItem.title, randomItem.price, randomItem.id);
       }
     })
@@ -250,8 +273,6 @@ function randomItems(num) {
       alert("Error retrieving information.");
     });
 }
-
-//console.log(itemCount)
 
 //Try3 with Class
 class Chart {
