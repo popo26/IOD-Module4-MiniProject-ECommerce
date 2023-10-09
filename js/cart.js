@@ -176,30 +176,44 @@ function showCartItems(title, price, image, id, count) {
   // adding id for debug purpose
   template.querySelector(".cart-id").innerText = id;
   // adding click event to identify each item to pass to item.html.
+
+  // To stop event bubbling
+  template
+    .querySelector(".cart-set-div")
+    .addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+  template
+    .querySelector(".remove-btn-div")
+    .addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
   template.querySelector(".cart-link").classList.add(`cartId${id}`);
   template
     .querySelector(`.cartId${id}`)
     .addEventListener("click", function (e) {
+      // e.stopPropagation();
       let inputId = id;
       localStorage.setItem("myId", inputId);
       window.location.href = "../pages/item.html";
     });
+
   template.querySelector(".cart-title").innerText = title;
   template.querySelector(".cart-item-number").innerText = `${count} pc`;
 
   template.querySelector(".cart-price").innerText = price + " NZD";
 
-  // adding click event to track cliking count of Add button.
+  // adding click event to decrease itemCount.
   // As the count required to be persistent during session, sessionStorage is used.
   template
     .querySelector(".cart-remove-btn")
     .addEventListener("click", function (e) {
       let currentValue = parseInt(sessionStorage["itemCount"]);
       sessionStorage["itemCount"] = currentValue - 1;
-      window.location.href = "";
     });
 
-  // include the populated template into the page
   document.querySelector("#cart-item-list").appendChild(template);
 }
 

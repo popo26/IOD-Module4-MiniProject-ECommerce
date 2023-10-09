@@ -237,6 +237,10 @@ a {
     font-size:smaller
 }
 
+.cart-link {
+    cursor: pointer;
+}
+
 .cart-image {
     /* height: 100px; 
     width: auto;

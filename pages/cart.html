@@ -39,11 +39,10 @@
     <template id="cart-template">
       <div class="cart-item-div">
         <div class="cart-id"></div>
-        <a class="cart-link" href="./item.html">
+
+        <a class="cart-link">
           <img class="cart-image" src="" class="cart-img-top" alt="..." />
-          <!-- <div class="cart-title"></div> -->
         </a>
-        <!-- <div class="cart-price"></div> -->
 
         <div class="cart-set-div">
           <p class="cart-title"></p>
@@ -51,12 +50,13 @@
           <p class="cart-price"></p>
         </div>
 
-<div class="remove-btn-div">
-  <button class="btn btn-dark cart-remove-btn">Remove</button>
-</div>
+        <div class="remove-btn-div">
+          <a href="./cart.html">
+            <button class="btn btn-dark cart-remove-btn">Remove</button>
+          </a>
+        </div>
       </div>
     </template>
-
 
     <template id="breakdown-template">
       <div class="breakdown-item-div">
@@ -68,7 +68,6 @@
         </div>
       </div>
     </template>
-
 
     <div class="page-container">
       <div class="content-wrap">
@@ -88,11 +87,9 @@
         </nav>
 
         <div class="cart-container">
-          <div class="total" id="cart-item-list"></div>
+          <div  id="cart-item-list"></div>
 
           <div class="chart-total-div">
-         
-
             <div class="chart-div">
               <div id="productsChart"></div>
             </div>
@@ -100,13 +97,15 @@
             <div class="total-div">
               <div id="breakdown-list"></div>
 
-              <button type="button" class="btn btn-outline-dark btn-lg checkout-btn">
+              <button
+                type="button"
+                class="btn btn-outline-dark btn-lg checkout-btn"
+              >
                 Checkout
               </button>
             </div>
           </div>
         </div>
-
       </div>
 
       <footer>
