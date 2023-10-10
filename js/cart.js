@@ -178,13 +178,17 @@ function randomItems(num) {
     .get("https://fakestoreapi.com/products")
     .then((response) => {
       const data = response.data;
-      //console.log(data)
+      console.log(data);
       for (let i = 0; i < num; i++) {
         const randomItem = data[Math.floor(Math.random() * data.length)];
         const cartIdDivs = document.querySelectorAll(".cart-id");
 
         console.log(randomItem.id, randomItem.category, randomItem.price);
-        randomItemList.push(randomItem.id);
+        randomItemList.push({
+          id: randomItem.id,
+          category: randomItem.category,
+          price: randomItem.price,
+        });
 
         let count = 1;
         if (cartIdDivs) {
@@ -332,37 +336,119 @@ function randomItems(num) {
 //console.log(`randomItemList is ${randomItemList.map(item=>item)}`)
 //Try4 with Class With actual data
 class Chart {
-  constructor(url, list) {
+  constructor(url) {
     this.url = url;
-    this.list = list;
+    // this.list = list;
   }
 
-  // getFullData(){
-
-  // }
-
   getCurrentItems() {
+    const randomItemList = [
+      { id: 1, category: "men's clothing", price: 10 },
+      { id: 2, category: "women's clothing", price: 11 },
+      { id: 3, category: "men's clothing", price: 13 },
+      { id: 4, category: "kitchen", price: 13 },
+    ];
+
     if (!document.querySelectorAll(".cart-item-div")) {
       console.log("No items");
     } else {
       const myChart = echarts.init(document.getElementById("productsChart"));
+      //console.log("Here", this.list);
 
-      console.log("Here", this.list);
-      const productList = [];
-      fetch(this.url)
-        .then((response) => response.json())
-        .then((products) => {
-          const productList = [];
-          for (let i = 0; i < products.length; i++) {
-            for (let k = 0; k < this.list.length; k++) {
-              if (products[i].id == this.list[k]) {
-                console.log("here");
-                console.log("matching ID is ", products[i].id);
-                productList.push(products[i]);
-              }
-            }
-          }
+      let listOfProductPerCategory = [];
+      let count = {};
+      let typeArr = [];
+      let countArray = [];
+      let priceTotalPerCategory = {};
+      let averageArray = [];
+      //Extracting category name for each object so there are lots of duplicates
+      //console.log("Im here1", this.list)
+
+      randomItemList.forEach((product) => {
+        // this.list.forEach((product) => {
+        console.log("Im here");
+        console.log("really", product.category);
+        //// let key = product.category;
+        listOfProductPerCategory.push({
+          [product.category]: product.price,
         });
+      });
+      console.log(listOfProductPerCategory);
+
+      // Counting category names in listOfProductPerCategory then
+      // adding the category name as key and the count as value as an object
+      listOfProductPerCategory.forEach((element) => {
+        // console.log(Object.keys(element));
+        // console.log(parseFloat(Object.values(element)));
+
+        count[Object.keys(element)] = (count[Object.keys(element)] || 0) + 1;
+        priceTotalPerCategory[Object.keys(element)] =
+          (parseFloat(priceTotalPerCategory[Object.keys(element)]) || 0) +
+          parseFloat(Object.values(element));
+      });
+      // console.log(count);
+      // console.log(priceTotalPerCategory);
+
+      // separating keys and values as separate arrays to use Apache Echart's xAxis and yAxis
+      for (let x in count) {
+        typeArr.push(x);
+        //countArray.push(count[x]);
+      }
+
+      //get average per category
+      for (let x in priceTotalPerCategory) {
+        // console.log(priceTotalPerCategory[x])
+        // console.log(count[x])
+        averageArray.push((priceTotalPerCategory[x] / count[x]).toFixed(2));
+      }
+
+      console.log(averageArray);
+      myChart.setOption({
+        //adding custom color for bars
+        color: ["#808080"],
+        xAxis: [
+          {
+            data: typeArr,
+            axisLabel: { rotate: 15, fontSize: 10 },
+          },
+          {
+            position: "bottom",
+            offset: 30,
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+            },
+            data: averageArray.map((price) => `$${price}`),
+            axisLabel: { rotate: 15, fontSize: 10 },
+          },
+        ],
+        yAxis: {},
+        series: [
+          {
+            name: "Categories",
+            type: "bar",
+            data: averageArray,
+          },
+        ],
+      });
+
+      // fetch(this.url)
+      //   .then((response) => response.json())
+      //   .then((products) => {
+      //     const productList = [];
+      //     for (let i = 0; i < products.length; i++) {
+      //       for (let k = 0; k < this.list.length; k++) {
+      //         if (products[i].id == this.list[k]) {
+      //           console.log("here");
+      //           console.log("matching ID is ", products[i].id);
+      //           //productList.push(products[i]);
+      //         }
+      //       }
+      //     }
+
+      //   });
 
       // let listOfProductPerCategory = [];
       // let count = {};
@@ -528,6 +614,8 @@ class Chart {
   // }
 }
 
-const myChart = new Chart("https://fakestoreapi.com/products", randomItemList);
+// const myChart = new Chart("https://fakestoreapi.com/products", randomItemList);
+const myChart = new Chart("https://fakestoreapi.com/products");
+
 // myChart.createChart();
 myChart.getCurrentItems();
