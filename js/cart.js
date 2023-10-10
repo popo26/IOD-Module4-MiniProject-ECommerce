@@ -1,4 +1,7 @@
 //sessionStorage is used so that count is persistent during session, instead of localStorage.
+
+let randomItemList = [];
+
 window.onload = function () {
   const itemCount = sessionStorage.getItem("itemCount");
   console.log("Total Count is " + itemCount);
@@ -6,12 +9,22 @@ window.onload = function () {
   if (itemCount < 1) {
     document.getElementById("cart-item-list").innerHTML =
       "<h4>No item has been added to your cart.</h4>";
+      document.querySelector(".checkout-btn").style.display="none";
   } else {
     document.getElementById("cart-item-list").innerHTML =
       "<h2>Your shopping cart ...</h2>";
-    randomItems(itemCount);
+    // randomItems(itemCount);
+
+    const myChart = new Chart(
+      "https://fakestoreapi.com/products",
+      randomItemList
+    );
+    myChart.randomItems(itemCount); 
   }
 };
+
+
+
 
 // template to display results of search in nav bar
 function showCartItems(title, price, image, id, count) {
@@ -50,7 +63,6 @@ function showCartItems(title, price, image, id, count) {
   template.querySelector(".cart-item-number").innerText = `${count} pc`;
   template.querySelector(".cart-price").innerText = price + " NZD";
   template.querySelector(".cart-price").classList.add(`cartPriceId${id}`);
-
   // adding click event to decrease itemCount.
   // As the count required to be persistent during session, sessionStorage is used.
   template
@@ -63,21 +75,18 @@ function showCartItems(title, price, image, id, count) {
 }
 
 // template to display results of search in nav bar
-function showBreakdown(title, price, id) {
-  const template = document
-    .getElementById("breakdown-template")
-    .content.cloneNode(true);
-
-  // adding id for debug purpose
-  // template.querySelector(".breakdown-id").innerText = id;
-
-  template.querySelector(".breakdown-title").innerText = title;
-  template.querySelector(".breakdown-item-number").innerText = "1 PC";
-  template.querySelector(".breakdown-price").innerText = price + " NZD";
-
-  // include the populated template into the page
-  document.querySelector("#breakdown-list").appendChild(template);
-}
+// function showBreakdown(title, price, id) {
+//   const template = document
+//     .getElementById("breakdown-template")
+//     .content.cloneNode(true);
+//   // adding id for debug purpose
+//   // template.querySelector(".breakdown-id").innerText = id;
+//   template.querySelector(".breakdown-title").innerText = title;
+//   template.querySelector(".breakdown-item-number").innerText = "1 PC";
+//   template.querySelector(".breakdown-price").innerText = price + " NZD";
+//   // include the populated template into the page
+//   document.querySelector("#breakdown-list").appendChild(template);
+// }
 
 let sum = 0;
 
@@ -106,7 +115,7 @@ function grandTotal(id) {
     }
   }
   console.log(`Sum is ${sum}`);
-  document.getElementById("grand-total").innerText = `${sum.toFixed(2)} NZD`;
+  document.getElementById("grand-total").innerHTML = `Grand Total: <span>${sum.toFixed(2)} NZD</span>`;
 }
 
 //   for (let i=0;i<items.length;i++){
@@ -171,71 +180,71 @@ function grandTotal(id) {
 //   }
 // }
 
-let randomItemList = [];
 
-function randomItems(num) {
-  axios
-    .get("https://fakestoreapi.com/products")
-    .then((response) => {
-      const data = response.data;
-      console.log(data);
-      for (let i = 0; i < num; i++) {
-        const randomItem = data[Math.floor(Math.random() * data.length)];
-        const cartIdDivs = document.querySelectorAll(".cart-id");
 
-        console.log(randomItem.id, randomItem.category, randomItem.price);
-        randomItemList.push({
-          id: randomItem.id,
-          category: randomItem.category,
-          price: randomItem.price,
-        });
+// function randomItems(num) {
+//   axios
+//     .get("https://fakestoreapi.com/products")
+//     .then((response) => {
+//       const data = response.data;
+//       console.log(data);
+//       for (let i = 0; i < num; i++) {
+//         const randomItem = data[Math.floor(Math.random() * data.length)];
+//         const cartIdDivs = document.querySelectorAll(".cart-id");
 
-        let count = 1;
-        if (cartIdDivs) {
-          for (let x in cartIdDivs) {
-            // console.log(document.querySelectorAll(".cart-id")[x].innerText)
-            if (cartIdDivs[x].innerText == randomItem.id) {
-              console.log("existing ID", cartIdDivs[x].innerText);
-              count++;
-              console.log(`count is ${count}`);
-              // Hide duplicate item
-              const dups = document.querySelectorAll(`.cartId${randomItem.id}`);
+//         console.log(randomItem.id, randomItem.category, randomItem.price);
+//         randomItemList.push({
+//           id: randomItem.id,
+//           category: randomItem.category,
+//           price: randomItem.price,
+//         });
 
-              for (let i = 0; i < dups.length; i++) {
-                //console.log(dups[i])
-                dups[i].style.display = "none";
-              }
-            }
-          }
-        }
+//         let count = 1;
+//         if (cartIdDivs) {
+//           for (let x in cartIdDivs) {
+//             // console.log(document.querySelectorAll(".cart-id")[x].innerText)
+//             if (cartIdDivs[x].innerText == randomItem.id) {
+//               console.log("existing ID", cartIdDivs[x].innerText);
+//               count++;
+//               console.log(`count is ${count}`);
+//               // Hide duplicate item
+//               const dups = document.querySelectorAll(`.cartId${randomItem.id}`);
 
-        if (document.querySelector(`.cartId${randomItem.id}`)) {
-          showCartItems(
-            randomItem.title,
-            randomItem.price * count,
-            randomItem.image,
-            randomItem.id,
-            count
-          );
-        } else {
-          showCartItems(
-            randomItem.title,
-            randomItem.price,
-            randomItem.image,
-            randomItem.id,
-            count
-          );
-        }
-        //showBreakdown(randomItem.title, randomItem.price, randomItem.id);
-        grandTotal(randomItem.id);
-      }
-      //console.log(randomItemList)
-    })
-    .catch((error) => {
-      console.error(`Error: ${error.message}`);
-      alert("Error retrieving information.");
-    });
-}
+//               for (let i = 0; i < dups.length; i++) {
+//                 //console.log(dups[i])
+//                 dups[i].style.display = "none";
+//               }
+//             }
+//           }
+//         }
+
+//         if (document.querySelector(`.cartId${randomItem.id}`)) {
+//           showCartItems(
+//             randomItem.title,
+//             randomItem.price * count,
+//             randomItem.image,
+//             randomItem.id,
+//             count
+//           );
+//         } else {
+//           showCartItems(
+//             randomItem.title,
+//             randomItem.price,
+//             randomItem.image,
+//             randomItem.id,
+//             count
+//           );
+//         }
+//         //showBreakdown(randomItem.title, randomItem.price, randomItem.id);
+//         grandTotal(randomItem.id);
+//       }
+//       //console.log(randomItemList)
+//     })
+//     .catch((error) => {
+//       console.error(`Error: ${error.message}`);
+//       alert("Error retrieving information.");
+//     });
+// }
 
 // //Try3 with Class
 // class Chart {
@@ -336,198 +345,189 @@ function randomItems(num) {
 //console.log(`randomItemList is ${randomItemList.map(item=>item)}`)
 //Try4 with Class With actual data
 class Chart {
-  constructor(url) {
+  constructor(url, list) {
     this.url = url;
-    // this.list = list;
+    this.list = list;
   }
 
+  randomItems(num) {
+    axios
+      .get(this.url)
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        for (let i = 0; i < num; i++) {
+          const randomItem = data[Math.floor(Math.random() * data.length)];
+          const cartIdDivs = document.querySelectorAll(".cart-id");
+  
+          console.log(randomItem.id, randomItem.category, randomItem.price);
+          randomItemList.push({
+            id: randomItem.id,
+            category: randomItem.category,
+            price: randomItem.price,
+          });
+  
+          let count = 1;
+          if (cartIdDivs) {
+            for (let x in cartIdDivs) {
+              // console.log(document.querySelectorAll(".cart-id")[x].innerText)
+              if (cartIdDivs[x].innerText == randomItem.id) {
+                console.log("existing ID", cartIdDivs[x].innerText);
+                count++;
+                console.log(`count is ${count}`);
+                // Hide duplicate item
+                const dups = document.querySelectorAll(`.cartId${randomItem.id}`);
+  
+                for (let i = 0; i < dups.length; i++) {
+                  //console.log(dups[i])
+                  dups[i].style.display = "none";
+                }
+              }
+            }
+          }
+  
+          if (document.querySelector(`.cartId${randomItem.id}`)) {
+            showCartItems(
+              randomItem.title,
+              randomItem.price * count,
+              randomItem.image,
+              randomItem.id,
+              count
+            );
+          } else {
+            showCartItems(
+              randomItem.title,
+              randomItem.price,
+              randomItem.image,
+              randomItem.id,
+              count
+            );
+          }
+          //showBreakdown(randomItem.title, randomItem.price, randomItem.id);
+          grandTotal(randomItem.id);
+          this.getCurrentItems()
+        }
+        //console.log(randomItemList)
+      })
+      .catch((error) => {
+        console.error(`Error: ${error.message}`);
+        alert("Error retrieving information.");
+      });
+  }
+
+
+
   getCurrentItems() {
-    const randomItemList = [
-      { id: 1, category: "men's clothing", price: 10 },
-      { id: 2, category: "women's clothing", price: 11 },
-      { id: 3, category: "men's clothing", price: 13 },
-      { id: 4, category: "kitchen", price: 13 },
-    ];
+    // const randomItemList = [
+    //   { id: 1, category: "men's clothing", price: 10 },
+    //   { id: 2, category: "women's clothing", price: 11 },
+    //   { id: 3, category: "men's clothing", price: 13 },
+    //   { id: 4, category: "kitchen", price: 13 },
+    // ];
 
-    if (!document.querySelectorAll(".cart-item-div")) {
-      console.log("No items");
-    } else {
-      const myChart = echarts.init(document.getElementById("productsChart"));
-      //console.log("Here", this.list);
+    // return new Promise((resolve, reject) => {
+      if (!document.querySelectorAll(".cart-item-div")) {
+        console.log("No items");
+        // reject("No Items");
+      } else {
+        // const myChart = echarts.init(document.getElementById("productsChart"));
+        console.log("Here", this.list);
 
-      let listOfProductPerCategory = [];
-      let count = {};
-      let typeArr = [];
-      let countArray = [];
-      let priceTotalPerCategory = {};
-      let averageArray = [];
-      //Extracting category name for each object so there are lots of duplicates
-      //console.log("Im here1", this.list)
-
-      randomItemList.forEach((product) => {
-        // this.list.forEach((product) => {
-        console.log("Im here");
-        console.log("really", product.category);
-        //// let key = product.category;
-        listOfProductPerCategory.push({
-          [product.category]: product.price,
+        let listOfProductPerCategory = [];
+        let count = {};
+        let typeArr = [];
+        let countArray = [];
+        let priceTotalPerCategory = {};
+        let averageArray = [];
+        //Extracting category name for each object so there are lots of duplicates
+        this.list.forEach((product) => {
+          // this.list.forEach((product) => {
+          console.log("really", product.category);
+          listOfProductPerCategory.push({
+            [product.category]: product.price,
+          });
         });
-      });
-      console.log(listOfProductPerCategory);
+        console.log(listOfProductPerCategory);
 
-      // Counting category names in listOfProductPerCategory then
-      // adding the category name as key and the count as value as an object
-      listOfProductPerCategory.forEach((element) => {
-        // console.log(Object.keys(element));
-        // console.log(parseFloat(Object.values(element)));
+        listOfProductPerCategory.forEach((element) => {
+          count[Object.keys(element)] = (count[Object.keys(element)] || 0) + 1;
+          priceTotalPerCategory[Object.keys(element)] =
+            (parseFloat(priceTotalPerCategory[Object.keys(element)]) || 0) +
+            parseFloat(Object.values(element));
+        });
+        // console.log(count);
+        // console.log(priceTotalPerCategory);
 
-        count[Object.keys(element)] = (count[Object.keys(element)] || 0) + 1;
-        priceTotalPerCategory[Object.keys(element)] =
-          (parseFloat(priceTotalPerCategory[Object.keys(element)]) || 0) +
-          parseFloat(Object.values(element));
-      });
-      // console.log(count);
-      // console.log(priceTotalPerCategory);
+        // separating keys and values as separate arrays to use Apache Echart's xAxis and yAxis
+        for (let x in count) {
+          typeArr.push(x);
+          //countArray.push(count[x]);
+        }
 
-      // separating keys and values as separate arrays to use Apache Echart's xAxis and yAxis
-      for (let x in count) {
-        typeArr.push(x);
-        //countArray.push(count[x]);
-      }
+        //get average per category
+        for (let x in priceTotalPerCategory) {
+          // console.log(priceTotalPerCategory[x])
+          // console.log(count[x])
+          averageArray.push((priceTotalPerCategory[x] / count[x]).toFixed(2));
+        }
 
-      //get average per category
-      for (let x in priceTotalPerCategory) {
-        // console.log(priceTotalPerCategory[x])
-        // console.log(count[x])
-        averageArray.push((priceTotalPerCategory[x] / count[x]).toFixed(2));
-      }
+        console.log(averageArray);
+        const myChart = echarts.init(document.getElementById("productsChart"));
 
-      console.log(averageArray);
-      myChart.setOption({
-        //adding custom color for bars
-        color: ["#808080"],
-        xAxis: [
-          {
-            data: typeArr,
-            axisLabel: { rotate: 15, fontSize: 10 },
-          },
-          {
-            position: "bottom",
-            offset: 30,
-            axisLine: {
-              show: false,
+        myChart.setOption({
+          title: {
+            text: 'Category Average'
+        },
+          //adding custom color for bars
+          color: ["#808080"],
+        
+          xAxis: [
+            {
+              data: typeArr,
+              axisLabel: { rotate: 15, fontSize: 10 },
             },
-            axisTick: {
-              show: false,
+            {
+              position: "bottom",
+              offset: 30,
+              axisLine: {
+                show: false,
+              },
+              axisTick: {
+                show: false,
+              },
+              data: averageArray.map((price) => `$${price}`),
+              axisLabel: { rotate: 15, fontSize: 10 },
             },
-            data: averageArray.map((price) => `$${price}`),
-            axisLabel: { rotate: 15, fontSize: 10 },
-          },
-        ],
-        yAxis: {},
-        series: [
-          {
-            name: "Categories",
-            type: "bar",
-            data: averageArray,
-          },
-        ],
-      });
+          ],
+          yAxis: {},
+          series: [
+            {
+              name: "Categories",
+              type: "bar",
+              data: averageArray,
+            },
+          ],
+        });
 
-      // fetch(this.url)
-      //   .then((response) => response.json())
-      //   .then((products) => {
-      //     const productList = [];
-      //     for (let i = 0; i < products.length; i++) {
-      //       for (let k = 0; k < this.list.length; k++) {
-      //         if (products[i].id == this.list[k]) {
-      //           console.log("here");
-      //           console.log("matching ID is ", products[i].id);
-      //           //productList.push(products[i]);
-      //         }
-      //       }
-      //     }
+        // fetch(this.url)
+        //   .then((response) => response.json())
+        //   .then((products) => {
+        //     const productList = [];
+        //     for (let i = 0; i < products.length; i++) {
+        //       for (let k = 0; k < this.list.length; k++) {
+        //         if (products[i].id == this.list[k]) {
+        //           console.log("here");
+        //           console.log("matching ID is ", products[i].id);
+        //           //productList.push(products[i]);
+        //         }
+        //       }
+        //     }
 
-      //   });
+        //   });
 
-      // let listOfProductPerCategory = [];
-      // let count = {};
-      // let typeArr = [];
-      // let countArray = [];
-      // let priceTotalPerCategory = {};
-      // let averageArray = [];
-      //Extracting category name for each object so there are lots of duplicates
-      //console.log(products)
-
-      // products.forEach((product) => {
-      //   // let key = product.category;
-      //   listOfProductPerCategory.push({
-      //     [product.category]: product.price,
-      //   });
-      // });
-      // //console.log(listOfProductPerCategory);
-
-      // // Counting category names in listOfProductPerCategory then
-      // // adding the category name as key and the count as value as an object
-      // listOfProductPerCategory.forEach((element) => {
-      //   // console.log(Object.keys(element));
-      //   // console.log(parseFloat(Object.values(element)));
-
-      //   count[Object.keys(element)] =
-      //     (count[Object.keys(element)] || 0) + 1;
-      //   priceTotalPerCategory[Object.keys(element)] =
-      //     (parseFloat(priceTotalPerCategory[Object.keys(element)]) || 0) +
-      //     parseFloat(Object.values(element));
-      // });
-      // // console.log(count);
-      // // console.log(priceTotalPerCategory);
-
-      // // separating keys and values as separate arrays to use Apache Echart's xAxis and yAxis
-      // for (let x in count) {
-      //   typeArr.push(x);
-      //   //countArray.push(count[x]);
-      // }
-
-      // //get average per category
-      // for (let x in priceTotalPerCategory) {
-      //   // console.log(priceTotalPerCategory[x])
-      //   // console.log(count[x])
-      //   averageArray.push((priceTotalPerCategory[x] / count[x]).toFixed(2));
-      // }
-
-      // console.log(averageArray);
-      // myChart.setOption({
-      //   //adding custom color for bars
-      //   color: ["#808080"],
-      //   xAxis: [
-      //     {
-      //       data: typeArr,
-      //       axisLabel: { rotate: 15, fontSize: 10 },
-      //     },
-      //     {
-      //       position: "bottom",
-      //       offset: 30,
-      //       axisLine: {
-      //         show: false,
-      //       },
-      //       axisTick: {
-      //         show: false,
-      //       },
-      //       data: averageArray.map((price) => `$${price}`),
-      //       axisLabel: { rotate: 15, fontSize: 10 },
-      //     },
-      //   ],
-      //   yAxis: {},
-      //   series: [
-      //     {
-      //       name: "Categories",
-      //       type: "bar",
-      //       data: averageArray,
-      //     },
-      //   ],
-      // });
-      // });
-    }
+        // resolve(myChart);
+      }
+    // });
   }
 
   // createChart() {
@@ -615,7 +615,7 @@ class Chart {
 }
 
 // const myChart = new Chart("https://fakestoreapi.com/products", randomItemList);
-const myChart = new Chart("https://fakestoreapi.com/products");
+// // const myChart = new Chart("https://fakestoreapi.com/products");
 
-// myChart.createChart();
-myChart.getCurrentItems();
+// // myChart.createChart();
+// myChart.getCurrentItems();
