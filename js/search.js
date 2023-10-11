@@ -9,7 +9,6 @@ function resultShow(title, price, image, id) {
   template.querySelector(".result-image").alt = title;
   // adding id for debug purpose
   template.querySelector(".result-id").innerText = id;
-  // adding click event to identify each item to pass to item.html.
   template.querySelector(".result-link").classList.add(`resultId${id}`);
   template
     .querySelector(`.resultId${id}`)
@@ -20,24 +19,18 @@ function resultShow(title, price, image, id) {
     });
   template.querySelector(".result-title").innerText = title;
   template.querySelector(".result-price").innerText = price + " NZD";
-
-  // adding click event to track cliking count of Add button.
-  // As the count required to be persistent during session, sessionStorage is used.
-  template.querySelector(".result-add-btn").addEventListener("click", function (e) {
-    // ternary operator to set 0 for initial value of itemCount variable
-    // to avoid error since it's initially undefined.
-    sessionStorage.setItem(
-      "itemCount",
-      !sessionStorage["itemCount"] ? 0 : sessionStorage["itemCount"]
-    );
-    // value of sessionStorage is not number so using parseInt.
-    let currentValue = parseInt(sessionStorage["itemCount"]);
-    sessionStorage["itemCount"] = currentValue + 1;
-    window.location.href = "/index.html";
-  });
-  
-  
-  // include the populated template into the page
+  // Tracking cliking count of Add button.
+  template
+    .querySelector(".result-add-btn")
+    .addEventListener("click", function (e) {
+      sessionStorage.setItem(
+        "itemCount",
+        !sessionStorage["itemCount"] ? 0 : sessionStorage["itemCount"]
+      );
+      let currentValue = parseInt(sessionStorage["itemCount"]);
+      sessionStorage["itemCount"] = currentValue + 1;
+      window.location.href = "/index.html";
+    });
   document.querySelector("#search-results").appendChild(template);
 }
 
@@ -65,7 +58,6 @@ document
             resultArray.push(data[x]);
           }
         }
-        // console.log(`resultArray length ${resultArray.length}`);
         if (resultArray.length === 0) {
           const message = "No result found.";
           document.querySelector("#search-results").innerHTML = message;

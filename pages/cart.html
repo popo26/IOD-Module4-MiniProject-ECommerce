@@ -24,18 +24,6 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <!-- <template id="cart-template">
-      <div class="cart-item-div">
-        <div class="cart-id"></div>
-        <a class="cart-link" href="./item.html">
-          <img class="cart-image" src="" class="cart-img-top" alt="..." />
-          <div class="cart-title"></div>
-        </a>
-        <div class="cart-price"></div>
-        <button class="btn btn-dark cart-remove-btn">Remove</button>
-      </div>
-    </template> -->
-
     <template id="cart-template">
       <div class="cart-item-div">
         <div class="cart-id"></div>
@@ -52,21 +40,13 @@
 
         <div class="remove-btn-div">
           <a href="./cart.html">
-            <button class="btn btn-dark cart-remove-btn">Remove</button>
+            <button class="btn btn-dark btn-sm cart-remove-btn">Remove</button>
           </a>
         </div>
       </div>
     </template>
 
-    <!-- <template id="breakdown-template">
-      <div class="breakdown-item-div">
-        <div class="breakdown-set-div">
-          <p class="breakdown-title"></p>
-          <p class="breakdown-item-number"></p>
-          <p class="breakdown-price"></p>
-        </div>
-      </div>
-    </template> -->
+
 
     <div class="page-container">
       <div class="content-wrap">
@@ -75,18 +55,21 @@
             <a class="navbar-brand shop-logo" href="../index.html"
               >Luise Vuitton</a
             >
+            <a href="../index.html" class=" back-a-tag">
             <button
               type="button"
-              class="btn btn-outline-dark back-btn"
-              onclick="history.back()"
+              class="btn btn-outline-dark cart-back-btn"
             >
               <iconify-icon icon="clarity:home-solid" width="20"></iconify-icon>
             </button>
+          </a>
           </div>
         </nav>
 
         <div class="cart-container">
-          <div  id="cart-item-list"></div>
+          <div  id="cart-item-list">
+            <h2 class="with-items">Your shopping cart ...</h2>
+          </div>
 
           <div class="chart-total-div">
             <div class="chart-div">
@@ -96,7 +79,6 @@
             <div class="total-div">
               <div id="grand-total"></div>
 
-              <!-- <div id="breakdown-list"></div> -->
 
               <button
                 type="button"

@@ -1,2 +1,7 @@
 // Days.js for footer
-document.querySelector(".year").innerHTML = dayjs().year();
+
+function findYear() {
+  document.querySelector(".year").innerHTML = dayjs().year();
+}
+
+findYear();
